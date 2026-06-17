@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Sleeper Draft Coach",
+  "version": "3.2",
+  "description": "Live draft recommendation overlay for Sleeper. Scores value-over-replacement for your roster in real time via the Sleeper API.",
+  "host_permissions": [
+    "https://api.sleeper.app/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://sleeper.com/draft/*",
+        "https://www.sleeper.com/draft/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
