@@ -1,21 +1,31 @@
 {
   "manifest_version": 3,
-  "name": "Sleeper Draft Coach",
-  "version": "3.2",
-  "description": "Live draft recommendation overlay for Sleeper. Scores value-over-replacement for your roster in real time via the Sleeper API.",
+  "name": "Mak's Draft Coach for Sleeper",
+  "version": "11.0",
+  "description": "Vegas-edge draft coach for Sleeper and ESPN drafts, plus in-season discipline tools.",
   "host_permissions": [
-    "https://api.sleeper.app/*"
+    "https://api.sleeper.app/*",
+    "https://api.sleeper.com/*",
+    "https://lm-api-reads.fantasy.espn.com/*",
+    "https://site.api.espn.com/*",
+    "https://www.firstdown.studio/*"
   ],
   "content_scripts": [
     {
       "matches": [
         "https://sleeper.com/draft/*",
-        "https://www.sleeper.com/draft/*"
+        "https://www.sleeper.com/draft/*",
+        "https://sleeper.com/leagues/*",
+        "https://www.sleeper.com/leagues/*",
+        "https://fantasy.espn.com/football/draft*"
       ],
       "js": [
         "content.js"
       ],
       "run_at": "document_idle"
     }
-  ]
+  ],
+  "background": {
+    "service_worker": "bg.js"
+  }
 }
