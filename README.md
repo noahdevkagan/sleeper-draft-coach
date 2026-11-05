@@ -35,3 +35,13 @@ your roster, and your next two pick numbers.
 
 ## v10.4
 - Churn guard "Need a spot?" now ranks drops by what they cost your starting lineup this week (lowest first), not by how recently you added them. Starters never show up as cheap drops.
+
+## v11.0 (Nov 5, 2026): Season Coach on the championship rule set (skill v13.4)
+- Every flagged add is priced on rest-of-season value: lineup points gained in each week through 17, playoff weeks (15-17) counted 8x. Bid = $0.08 per weighted point. A one-week fill is worth about $0.
+- FAAB plan in the cap line: Weeks 9-11 at most $15 total and keep $50; Weeks 12-14 up to $35 for a player who starts for you in the playoffs; Week 15+ spend what it takes.
+- FREE ADD tag: a claim with a 12+ projection or 10+ touches on 60%+ snaps is a $0-1 add and does not count as the weekly move.
+- Role rule: a bench player who starts in any week through 17 is never the drop for a different position. Drop order is ranked by rest-of-season cost ("free drop" vs "role, costs X").
+- Box scores never set a bid (WATCH stays an alert).
+- DEF: swap only when a free DEF is 2+ expected points better this week (was 1.0 opponent implied point).
+- Weekly trade prompt removed.
+Evidence for each rule: SEASON_PLAYBOOK.md, v11.0 section.

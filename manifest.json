@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Mak's Draft Coach for Sleeper",
-  "version": "10.6",
+  "version": "11.0",
   "description": "Vegas-edge draft coach for Sleeper and ESPN drafts, plus in-season discipline tools.",
   "host_permissions": [
     "https://api.sleeper.app/*",

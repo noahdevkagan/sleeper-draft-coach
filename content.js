@@ -311,14 +311,14 @@ function render(){
     el.addEventListener("mousedown",e=>{if(!e.target.closest("#mkc-drag"))return;drag=true;dx=e.clientX-el.offsetLeft;dy=e.clientY-el.offsetTop;e.preventDefault();});
     document.addEventListener("mousemove",e=>{if(!drag)return;el.style.left=(e.clientX-dx)+"px";el.style.top=(e.clientY-dy)+"px";el.style.right="auto";});
     document.addEventListener("mouseup",()=>drag=false);}
-  if(state.collapsed){el.innerHTML='<div id="mkc-head" style="padding:10px 12px;font-weight:800;cursor:pointer;background:#151B28;letter-spacing:.5px">DRAFT COACH <span style="color:#5A6478;font-size:9px;font-weight:600">v10.6</span> <span style="color:#2FE08A">&#9654;</span></div>';
+  if(state.collapsed){el.innerHTML='<div id="mkc-head" style="padding:10px 12px;font-weight:800;cursor:pointer;background:#151B28;letter-spacing:.5px">DRAFT COACH <span style="color:#5A6478;font-size:9px;font-weight:600">v11.0</span> <span style="color:#2FE08A">&#9654;</span></div>';
     document.getElementById("mkc-head").onclick=()=>{state.collapsed=false;render();};return;}
   const c=coach();
   try{maybeAssist(c);}catch(e){}
   const slotOpts=Array.from({length:state.teams},(_,i)=>i+1).map(s=>'<option value="'+s+'"'+(s===state.slot?' selected':'')+'>'+s+'</option>').join("");
   const tags=p=>{let t="";const lastNm=(p.name||"").trim().split(" ").pop().toLowerCase();const confirmed=state.platform==="espn"&&state.espnAvail&&[...state.espnAvail].some(n=>n.includes(lastNm));if(p.lag&&!confirmed)t+='<span style="background:#FF5C6A;color:#0C1018;font-size:9px;font-weight:800;border-radius:3px;padding:0 4px;margin-left:5px">VERIFY ON BOARD</span>';if(BOOM.has(p.name))t+='<span style="color:#2FE08A;font-size:10px;margin-left:4px" title="40%+ league-winning weeks in 2025">&#9889;</span>';if(p.stack)t+='<span style="background:#FFC247;color:#0C1018;font-size:9px;font-weight:800;border-radius:3px;padding:0 4px;margin-left:5px">STACK</span>';if(p.urgent)t+='<span style="background:#2FE08A;color:#0C1018;font-size:9px;font-weight:800;border-radius:3px;padding:0 4px;margin-left:5px">NOW OR NEVER</span>';if(VETRISK.has(p.name))t+='<span style="color:#FFC247;border:1px solid #FFC247;font-size:9px;font-weight:800;border-radius:3px;padding:0 4px;margin-left:5px">VET</span>';return t;};
   el.innerHTML=
-  '<div id="mkc-drag" style="padding:10px 12px;font-weight:800;background:#151B28;display:flex;justify-content:space-between;align-items:center;letter-spacing:.5px;cursor:move;white-space:nowrap;gap:8px" title="Drag to move"><span id="mkc-head" style="cursor:pointer">DRAFT COACH <span style="color:#2FE08A">LIVE</span> <span style="color:#5A6478;font-size:9px;font-weight:600">v10.6</span></span><span><span id="mkc-exp" style="cursor:pointer;color:#5BA8FF;font-size:12px;font-weight:800;margin-right:8px" title="Download draft log as a .json file">'+(state.expMsg||"&#8681;")+'</span><span id="mkc-sync" style="cursor:pointer;color:#5BA8FF;font-size:11px;margin-right:10px">&#8635; SYNC</span><span style="color:#FFC247;font-size:13px;white-space:nowrap">R'+c.round+'&middot;PK'+c.pickNum+'</span></span></div>'+
+  '<div id="mkc-drag" style="padding:10px 12px;font-weight:800;background:#151B28;display:flex;justify-content:space-between;align-items:center;letter-spacing:.5px;cursor:move;white-space:nowrap;gap:8px" title="Drag to move"><span id="mkc-head" style="cursor:pointer">DRAFT COACH <span style="color:#2FE08A">LIVE</span> <span style="color:#5A6478;font-size:9px;font-weight:600">v11.0</span></span><span><span id="mkc-exp" style="cursor:pointer;color:#5BA8FF;font-size:12px;font-weight:800;margin-right:8px" title="Download draft log as a .json file">'+(state.expMsg||"&#8681;")+'</span><span id="mkc-sync" style="cursor:pointer;color:#5BA8FF;font-size:11px;margin-right:10px">&#8635; SYNC</span><span style="color:#FFC247;font-size:13px;white-space:nowrap">R'+c.round+'&middot;PK'+c.pickNum+'</span></span></div>'+
   '<div style="padding:8px 12px;border-bottom:1px solid #1B2333;color:#8A94A8;display:flex;gap:8px;align-items:center;flex-wrap:wrap">My slot'+(state.auto&&!state.slotLocked?' <b style="color:#2FE08A;font-size:9px">AUTO</b>':'')+' <select id="mkc-slot" style="background:#1E2636;color:#E8EDF5;border:1px solid #2A3447;border-radius:5px;padding:2px 5px">'+slotOpts+'</select><span>next: <b style="color:#E8EDF5">#'+c.np+'</b> then <b style="color:#E8EDF5">#'+c.npa+'</b></span>'+(state.err?'<span style="color:#FF5C6A">'+esc(state.err)+'</span>':'')+'</div>'+
   '<div style="padding:6px 12px;border-bottom:1px solid #1B2333;display:flex;align-items:center;gap:8px;font-size:11px;flex-wrap:wrap">'+'<span id="mkc-assist" style="cursor:pointer;padding:2px 8px;border-radius:10px;font-weight:800;'+(state.assist?"background:#2FE08A;color:#0C1018":"background:#1B2333;color:#8A94A8")+'">AUTOPICK '+(state.assist?"ON":"OFF")+'</span>'+(state.pending?'<span style="color:#FFC247;font-weight:800">drafting '+esc(state.pending.name)+' in '+state.pendingT+'s</span><span id="mkc-cancel" style="cursor:pointer;background:#FF5C6A;color:#0C1018;padding:2px 8px;border-radius:10px;font-weight:800">CANCEL</span>':'<span style="color:#8A94A8">all rounds</span>')+(state.assistErr?'<span style="color:#FF5C6A">'+state.assistErr+'</span>':'')+(state.pickMsg?'<span style="color:#2FE08A">'+esc(state.pickMsg)+'</span>':'')+'</div>'+'<div style="padding:10px 12px;border-bottom:1px solid #1B2333">'+((c.top[0]&&c.top[0].urgent)?'<div style="background:#173B2A;border:1px solid #2FE08A;border-radius:6px;padding:5px 8px;margin-bottom:7px;color:#2FE08A;font-weight:800;font-size:12px">&#9888; TAKE '+esc(c.top[0].name).toUpperCase()+' NOW</div>':'')+'<div style="color:#2FE08A;font-weight:800;font-size:11px;letter-spacing:1px;margin-bottom:6px">COACH SAYS &mdash; TOP 3 NOW</div>'+
   c.top.map((p,i)=>'<div style="display:flex;align-items:center;gap:7px;padding:4px 0"><span style="color:#FFC247;font-weight:800;width:14px">'+(i+1)+'</span><span style="color:'+POSC[p.pos]+';font-weight:800;font-size:10px;width:24px">'+p.pos+'</span><span style="flex:1">'+esc(p.name)+tags(p)+'</span>'+(typeof p.m==="number"&&p.m>0&&p.pts>0?'<span title="Points gained vs best '+p.pos+' likely there at your next pick" style="color:'+(p.m>=20?"#2FE08A":"#8A94A8")+';font-weight:700;font-size:11px">+'+Math.max(0,p.m)+'</span>':'')+'</div>').join("")+'</div>'+
@@ -430,7 +430,7 @@ async function poll(){
 // Built from 3yr league history: the leaks are FAAB torching, fast drops, zero trades.
 // v10.5 (rule set v11.0, Oct 3 2026, PROPOSED not validated): no time-based drop locks (HOLD_WKS/DRAFT_EVAL_WK = 0),
 // CLAIM = immediate upgrade only; UPSIDE = role rising, judged separately; bids scale with gain and league history.
-const RULES={BID_CAP_PRE_W8:999,RESERVE:35,RESERVE_UNTIL:10,HOLD_WKS:0,DRAFT_EVAL_WK:0,TRADE_OPEN:6,TRADE_CLOSE:10,
+const RULES={BID_CAP_PRE_W8:999,RESERVE:35,RESERVE_UNTIL:10,HOLD_WKS:0,DRAFT_EVAL_WK:0,TRADE_OPEN:99,TRADE_CLOSE:0,
   UPSIDE_SHARE:0.55,   // last week on 55%+ snaps...
   UPSIDE_OPP:6,        // ...with 6+ opportunities (targets + carries) last week, AND
   UPSIDE_DOPP:3,       // opportunities up 3+ week over week, OR
@@ -442,7 +442,13 @@ const RULES={BID_CAP_PRE_W8:999,RESERVE:35,RESERVE_UNTIL:10,HOLD_WKS:0,DRAFT_EVA
   HOLE_OVERRIDE:4.0,   // a free agent who adds 4+ to your STARTING lineup unlocks your worst drafted bench player
   DROP_SNAP:0.60,      // under 60% two straight weeks = role eroding [backtest: flagged group fwd 6.8 vs 11.4]
   DROP_PTS:10,         // ...AND averaging under 10 pts those weeks. Without this, Henry-type low-snap producers get flagged.
-  DROP_WKS:2};
+  DROP_WKS:2,
+  // v11.0 (skill v13.4, Nov 2026): championship weighting + FAAB plan + free-agent flag. Evidence in SEASON_PLAYBOOK.md.
+  PO_W:8,              // a Week 15-17 point is worth ~8x a Week 9-14 point for title odds (sim 6.3x-12.7x, median 8.8x)
+  DPP:0.08,            // FAAB $ per weighted point (0.20 x 12/30: a flat weekly gain keeps its old price)
+  PLAN_REG_THRU:11,PLAN_REG_CAP:15,PLAN_RESERVE:50,PLAN_PO_FROM:12,PLAN_PO_CAP:35,PLAN_ALL_FROM:15,
+  FREE_PROJ:12,FREE_OPP:10,FREE_SHARE:0.60,   // free-add triggers: proj 12+ (5 of 7 hit 12+ ppg) or 10+ touches on 60%+ snaps
+  HZ_END:17,DEF_EDGE_PTS:2.0};
 const S={week:0,budget:100,used:0,myRoster:null,rosters:[],users:{},names:{},drafted:new Set(),addedWk:{},league:null,err:"",collapsed:false,proj:{},logs:{},wire:[],allWire:[],benchFloor:null,eroding:new Set(),holeOverride:null,vegas:{},vegasOK:false,vegasRatio:1,matchup:null,dropFlags:[]};
 function leagueId(){const m=location.pathname.match(/\/leagues\/(\d+)/);return m?m[1]:null;}
 async function jf(u){return (await fetch(u)).json();}
@@ -466,7 +472,7 @@ async function seasonLoad(){
     S.bids=[];
     if(S.myRoster){for(let w=1;w<=S.week;w++){const tx=await jf("https://api.sleeper.app/v1/league/"+lid+"/transactions/"+w);
       tx.forEach(t=>{if(t.adds)for(const pid in t.adds){if(t.adds[pid]===S.myRoster.roster_id)S.addedWk[pid]=w;}
-        if(t.type==="waiver"&&t.status==="complete"&&t.settings&&t.settings.waiver_bid!=null)S.bids.push({w,bid:t.settings.waiver_bid,pid:Object.keys(t.adds||{})[0]});});}}
+        if(t.type==="waiver"&&t.status==="complete"&&t.settings&&t.settings.waiver_bid!=null)S.bids.push({w,bid:t.settings.waiver_bid,pid:Object.keys(t.adds||{})[0],rid:(t.roster_ids||[])[0]});});}}
     await waiverScan(lid);
     await matchupScan(lid);
     await defScan();
@@ -492,19 +498,42 @@ async function defScan(){
     let verdict="HOLD";
     if(my&&!g)verdict="BYE";
     else if(g&&g.status&&g.status!=="pre")verdict="LOCKED";
-    else if(DEF_MODE==="stream"){ if(!my)verdict="BYE"; else if(g&&g.oppImp!=null&&avail[0]&&(g.oppImp-avail[0].oppImp)>=DEF_STREAM_EDGE)verdict="SWAP"; }
+    else if(DEF_MODE==="stream"){ if(!my)verdict="BYE"; else if(g&&g.oppImp!=null&&avail[0]&&(avail[0].exp-myExp)>=RULES.DEF_EDGE_PTS)verdict="SWAP"; }   // v11.0: stream only when 2+ pts better (skill v13.4)
     else if(g&&g.oppImp!=null&&g.oppImp>=DEF_SWAP_IMP)verdict=(avail[0]&&avail[0].exp-myExp>=2)?"SWAP":"HOLD_NOBETTER";
     const sp=t=>{const o=S.proj[t];return o&&o.pos==="DEF"?o.sleeper!=null?o.sleeper:o.pts:null;};
     S.kd={my,g,myExp,best:avail[0]||null,verdict,kMode:kModeOf(S.league&&S.league.scoring_settings),ok:Object.keys(im).length>0,mySl:my?sp(my):null,bestSl:avail[0]?sp(avail[0].t):null};
   }catch(e){}
 }
-function faabLine(){
-  const left=S.budget-S.used;
-  const reserve=S.week<RULES.RESERVE_UNTIL?RULES.RESERVE:0;
-  const spendable=Math.max(0,left-reserve);
-  const cap=spendable;
-  return {left,reserve,spendable,cap};
+function faabLine(po){
+  // v11.0 season FAAB plan. Wk 9-11: $15 total and keep $50. Wk 12-14: up to $35 for a player who starts for you in Wk 15-17, others keep $50. Wk 15+: all of it.
+  const left=S.budget-S.used;const wk=S.week||1;const rid=S.myRoster&&S.myRoster.roster_id;
+  const spent9=(S.bids||[]).filter(b=>b.rid===rid&&b.w>=9).reduce((a,b)=>a+(b.bid||0),0);
+  let cap,label;
+  if(wk>=RULES.PLAN_ALL_FROM){cap=left;label="playoffs: spend what it takes";}
+  else if(wk<RULES.PLAN_PO_FROM){cap=Math.max(0,Math.min(RULES.PLAN_REG_CAP-spent9,left-RULES.PLAN_RESERVE));label="wk 9-11 cap $"+RULES.PLAN_REG_CAP+" total ($"+spent9+" used), keep $"+RULES.PLAN_RESERVE;}
+  else if(po){cap=Math.min(RULES.PLAN_PO_CAP,left);label="playoff starter: up to $"+RULES.PLAN_PO_CAP;}
+  else{cap=Math.max(0,left-RULES.PLAN_RESERVE);label="keep $"+RULES.PLAN_RESERVE+" for playoff starters";}
+  return {left,reserve:left-cap,spendable:cap,cap,label,spent9};
 }
+// v11.0 rest-of-season helpers: lineup value in each week through 17, playoff weeks x8.
+const wkW=w=>w>=15?RULES.PO_W:1;
+function posOf(pid){const o=S.proj[pid];return (o&&o.pos)||(S.names[pid]||{}).pos;}
+function ptsAt(pid,w){if(w===S.week){const o=S.proj[pid];return o?o.pts*injMult(o.inj):0;}const m=(S.hz||{})[w];return m&&m[pid]!=null?m[pid]:0;}
+function myActive(){const my=S.myRoster;if(!my)return [];const ir=new Set(my.reserve||[]);return (my.players||[]).filter(p=>!ir.has(p));}
+function lineupAt(pids,w,extra){
+  const hv=[];pids.forEach(p=>{const ps=posOf(p);if(ps==="QB"||ps==="RB"||ps==="WR"||ps==="TE")hv.push({pos:ps,pts:ptsAt(p,w)});});
+  if(extra)hv.push(extra);
+  const rp=(S.league&&S.league.roster_positions)||["RB","RB","WR","WR","TE","FLEX","FLEX","FLEX"];const cnt=k=>rp.filter(x=>x===k).length;
+  const by=ps=>hv.filter(x=>x.pos===ps).sort((a,b)=>b.pts-a.pts);const qb=by("QB"),rb=by("RB"),wr=by("WR"),te=by("TE");
+  const st=qb.slice(0,cnt("QB")).concat(rb.slice(0,cnt("RB")),wr.slice(0,cnt("WR")),te.slice(0,cnt("TE")));
+  const fl=rb.slice(cnt("RB")).concat(wr.slice(cnt("WR")),te.slice(cnt("TE"))).sort((a,b)=>b.pts-a.pts).slice(0,cnt("FLEX"));
+  return st.concat(fl).reduce((a,x)=>a+x.pts,0);}
+function hzWeeks(){const out=[];for(let w=S.week;w<=RULES.HZ_END;w++){if(w===S.week||(S.hz&&S.hz[w]))out.push(w);}return out;}
+function rosValue(addPid,dropPid){const base=myActive();const after=base.filter(p=>p!==dropPid);let net=0,po=0,starts=0;
+  hzWeeks().forEach(w=>{const g=lineupAt(after,w,{pos:posOf(addPid),pts:ptsAt(addPid,w)})-lineupAt(base,w);net+=g*wkW(w);if(w>=15)po+=g*wkW(w);if(g>0.05)starts++;});
+  return {net,po,starts};}
+// role rule (skill v13.4, kept after backtest: Allgeier had 1 projected start, then 22 ppg): starts in any week through 17 = never a drop for another position
+function hasRole(pid){const base=myActive();return hzWeeks().some(w=>lineupAt(base,w)-lineupAt(base.filter(p=>p!==pid),w)>0.05);}
 // ===== VEGAS WEEKLY BOARD (firstdown.studio) =====
 // Standing rule: Vegas first. Sleeper projection only where no props exist, scaled to Vegas.
 async function fetchVegas(){
@@ -587,6 +616,9 @@ async function waiverScan(lid){
     const nm=((p.first_name||"")+" "+(p.last_name||"")).trim();
     S.proj[r.player_id]={n:nm,pos:p.position,team:p.team||"",pts:s.pts_ppr,inj:p.injury_status||""};});
   await fetchVegas();
+  // v11.0: Sleeper projections for every week through 17 (rest-of-season value, role rule)
+  S.hz={};const hzList=[];for(let w=wk+1;w<=RULES.HZ_END;w++)hzList.push(w);
+  await Promise.all(hzList.map(async w=>{try{const d=await jf("https://api.sleeper.com/projections/nfl/"+yr+"/"+w+"?season_type=regular&"+POS+"&order_by=pts_ppr");const m={};(d||[]).forEach(r=>{if(r.stats&&r.stats.pts_ppr!=null)m[r.player_id]=r.stats.pts_ppr;});S.hz[w]=m;}catch(e){}}));
   // last two completed weeks of usage
   S.logs={};
   for(let w=Math.max(1,wk-2);w<wk;w++){
@@ -633,6 +665,7 @@ async function waiverScan(lid){
       if(aw&&S.week-aw<RULES.HOLD_WKS)return false;
       return true;});
     S.droppable=droppable;
+    S.role=new Set(droppable.filter(hasRole));   // v11.0 role rule
     const activeCnt=(S.myRoster.players||[]).filter(p=>!(S.myRoster.reserve||[]).includes(p)).length;
     const activeMax=((S.league&&S.league.roster_positions)||[]).length;
     S.openSpot=activeMax>0&&activeCnt<activeMax;
@@ -674,13 +707,14 @@ async function waiverScan(lid){
     // value = his projection (Vegas PPR where posted), injury-adjusted. No overrides.
     const val=o.pts*injMult(o.inj);   // no forecast override: WATCH is an alert, not a projection
     // best LEGAL transaction: no-drop if an active spot is open, else each droppable, unlocked bench player
-    let gain=-99,dropName="",dropPts=null;
+    let gain=-99,dropName="",dropPts=null,dropPid=null;
     if(S.myRoster){
       if(S.openSpot){gain=lineupPts(myPids,{pos:o.pos,pts:val})-base;dropName="";}
       (S.droppable||[]).forEach(d=>{const dp=S.proj[d];if(dp&&dp.locked)return;
+        if(S.role&&S.role.has(d)&&posOf(d)!==o.pos)return;   // v11.0: never drop a player with a role for another position
         const g=lineupPts(myPids.filter(p=>p!==d),{pos:o.pos,pts:val})-base;
         const tie=Math.abs(g-gain)<0.01&&dp&&dropPts!=null&&dp.pts<dropPts;
-        if(g>gain+0.01||tie){gain=g;dropName=dp?dp.n:"";dropPts=dp?dp.pts:null;}});
+        if(g>gain+0.01||tie){gain=g;dropName=dp?dp.n:"";dropPts=dp?dp.pts:null;dropPid=d;}});
     }
     let gainFree=null;   // what the move would be worth once your hold rules lift
     if(gain<-50&&S.myRoster){gainFree=-99;(S.benchAll||[]).forEach(d=>{const g=lineupPts(myPids.filter(p=>p!==d),{pos:o.pos,pts:val})-base;if(g>gainFree)gainFree=g;});}
@@ -688,7 +722,7 @@ async function waiverScan(lid){
     const fmt=x=>(x>0?"+"+x.toFixed(1):"+0.0");
     let v="NO",why=fmt(gs)+" to your lineup"+(gain>-50?"":" once bench unlocks")+". Needs +"+RULES.CLAIM_EDGE+".";
     if(gain>=RULES.CLAIM_EDGE){v="CLAIM";why="+"+gain.toFixed(1)+" to lineup"+(dropName?", drop "+dropName:", open spot")+(o.locked?" | locked this week":"");}
-    else if(big){v="WATCH";why="one big game"+(gain>=RULES.CLAIM_EDGE?" | would start +"+gain.toFixed(1):"");}
+    else if(big){v="WATCH";why="one big game (box score: never a bid, 12% hit rate)"+(gain>=RULES.CLAIM_EDGE?" | would start +"+gain.toFixed(1):"");}
     else if(gain>=RULES.CLAIM_EDGE){v="WATCH";why="would start (+"+gain.toFixed(1)+") but bench is locked";}
     // v10.5 UPSIDE (rule 3/4): role rising, judged apart from this week's lineup gain. An alert to review, not a verdict.
     const prev=L.length>1?L[L.length-2]:null;let upside="";
@@ -707,7 +741,8 @@ async function waiverScan(lid){
     const rs=(S.league&&S.league.settings)||{};let irNote="";
     if(o.inj==="IR")irNote="IR-eligible";else if(o.inj==="Out")irNote=rs.reserve_allow_out?"IR-eligible (Out)":"NOT IR-eligible (Out)";
     else if(o.inj==="PUP")irNote="PUP: IR eligibility untested";else if(o.inj==="Doubtful")irNote=rs.reserve_allow_doubtful?"IR-eligible (D)":"";
-    rows.push({n:o.n,pos:o.pos,pts:o.pts,inj:o.inj,v,why,gain:gs,src:o.src,bid,bmax,irNote,opp:last?(last.opp||0):0,
+    const free=v==="CLAIM"&&(val>=RULES.FREE_PROJ||(last&&last.share!=null&&(last.opp||0)>=RULES.FREE_OPP&&last.share>=RULES.FREE_SHARE));
+    rows.push({pid,dropPid,free,n:o.n,pos:o.pos,pts:o.pts,inj:o.inj,v,why,gain:gs,src:o.src,bid,bmax,irNote,opp:last?(last.opp||0):0,
       share:last&&last.share!=null?Math.round(100*last.share):null,lastPts:last?last.pts:null});
   }
   // v10.5.1 (rule 1): a bid is worth the edge over the next-best free option at that position, not over an empty slot.
@@ -737,6 +772,13 @@ async function waiverScan(lid){
     if((o.pos==="RB"||o.pos==="WR")&&q.dco===1&&r.v!=="CLAIM"&&r.share!=null&&r.share>=50&&r.opp>=8){const h=hurtAt[q.team+"|"+o.pos];
       if(h&&h.length){const F=faabLine();r.v="LEAD";r.why="depth chart #1, "+h.slice(0,2).join(" + ")+" out"+(r.share!=null?" | "+r.share+"% snaps":"")+" | "+r.opp+" touches last wk";
         r.bid=Math.min(F.cap,6);r.bmax=Math.min(F.cap,12);}}}
+  // v11.0: price every flagged add on rest-of-season value (playoffs x8), capped by the season FAAB plan.
+  rows.forEach(r=>{if(!(r.v==="CLAIM"||r.v==="LEAD"||r.v==="UPSIDE"))return;
+    const rv=rosValue(r.pid,r.dropPid);r.ros=rv;const ceil=Math.max(0,Math.floor(rv.net*RULES.DPP));const F=faabLine(rv.po>0);
+    r.bid=Math.min(ceil,F.cap);r.bmax=r.bid;
+    r.why+=" | rest of season "+(rv.net>=0?"+":"")+rv.net.toFixed(1)+" (playoff part "+rv.po.toFixed(1)+")";
+    if(r.v==="CLAIM"&&rv.net<=0){r.v="NO";r.why+=" | helps this week, costs you later";r.bid=null;r.free=false;}
+    else if(r.free){r.bid=Math.min(1,Math.max(r.bid,0));r.bmax=1;r.why+=" | FREE ADD: not your weekly move";}});
   const ORD={CLAIM:0,LEAD:1,UPSIDE:2,WATCH:3,NO:4};
   rows.sort((a,b)=>(ORD[a.v]-ORD[b.v])||((b.gain||0)-(a.gain||0))||(a.v==="UPSIDE"?(b.opp-a.opp):0)||b.pts-a.pts);
   // board: every CLAIM, then up to 3 UPSIDE, then WATCH/NO to fill 7 rows
@@ -822,9 +864,12 @@ function seasonRender(){
     // v10.5 (rule 5): lineup cost is one input. Show position depth and the player's usage so bench value beyond this week is visible.
     const depth={};act.forEach(p=>{const o=S.proj[p];if(o)depth[o.pos]=(depth[o.pos]||0)+1;});
     safe=rows.filter(r=>!ir.has(r.pid)&&['QB','RB','WR','TE'].includes(r.info.pos)&&S.proj[r.pid]&&!(S.proj[r.pid].locked))
-      .map(r=>{const L=S.logs[r.pid]||[];const last=L[L.length-1];return {n:r.info.n,pos:r.info.pos,cost:base-lineupPts(act.filter(p=>p!==r.pid)),pts:(S.proj[r.pid]||{}).pts||0,d:depth[r.info.pos]||0,sh:last&&last.share!=null?Math.round(100*last.share):null,flag:r.tag};})
-      .filter(x=>x.cost<1.5).sort((a,b)=>a.cost-b.cost||a.pts-b.pts).slice(0,4)
-      .map((x,i)=>'<div style="margin-top:2px"><span style="color:#5A6478">'+(i+1)+'.</span> <b>'+esc(x.n)+'</b> <span style="color:#8A94A8;font-size:10px">'+x.pos+' '+x.pts.toFixed(1)+(x.cost>0.05?' &middot; costs '+x.cost.toFixed(1):'')+(x.sh!=null?' &middot; '+x.sh+'% snaps':'')+(x.flag&&x.flag.indexOf('new')===0?' &middot; <span style="color:#FFC247">'+x.flag+'</span>':'')+'</span></div>');
+      .map(r=>{const L=S.logs[r.pid]||[];const last=L[L.length-1];
+        // v11.0: cost = rest-of-season lineup points lost (playoff weeks x8), not this week only; role = starts in any week through 17
+        let ros=0;hzWeeks().forEach(w=>{ros+=(lineupAt(act,w)-lineupAt(act.filter(p=>p!==r.pid),w))*wkW(w);});
+        return {n:r.info.n,pos:r.info.pos,cost:ros,role:ros>0.05,pts:(S.proj[r.pid]||{}).pts||0,d:depth[r.info.pos]||0,sh:last&&last.share!=null?Math.round(100*last.share):null,flag:r.tag};})
+      .sort((a,b)=>a.cost-b.cost||a.pts-b.pts).slice(0,4)
+      .map((x,i)=>'<div style="margin-top:2px"><span style="color:#5A6478">'+(i+1)+'.</span> <b style="color:'+(x.role?'#E8ECF4':'#2FE08A')+'">'+esc(x.n)+'</b> <span style="color:#8A94A8;font-size:10px">'+x.pos+' '+x.pts.toFixed(1)+(x.role?' &middot; <span style="color:#FFC247">role, costs '+x.cost.toFixed(1)+' thru wk17</span>':' &middot; <span style="color:#2FE08A">free drop</span>')+(x.sh!=null?' &middot; '+x.sh+'% snaps':'')+(x.flag&&x.flag.indexOf('new')===0?' &middot; <span style="color:#FFC247">'+x.flag+'</span>':'')+'</span></div>');
   }
   const tradeOpen=wk>=RULES.TRADE_OPEN&&wk<=RULES.TRADE_CLOSE;
   let tradeHtml="";
@@ -889,15 +934,15 @@ function seasonRender(){
   // v10.6 DO THIS WEEK: the actions, nothing else
   const todo=[];
   if(S.kd&&S.kd.ok&&(S.kd.verdict==="SWAP"||S.kd.verdict==="BYE")&&S.kd.best)todo.push(['#2FE08A','DEF: add '+esc(TEAM_NICK[S.kd.best.t])+(S.kd.my?', drop '+esc(TEAM_NICK[S.kd.my]||S.kd.my):'')]);
-  (S.allWire||[]).filter(r=>r.v==="CLAIM"||r.v==="LEAD").slice(0,2).forEach(r=>{const dm=r.why.match(/drop [^,|]+/);todo.push([COL[r.v],(r.v==="CLAIM"?'Claim ':'Bid ')+esc(r.n)+' $'+r.bid+(r.v==="CLAIM"&&dm?', '+esc(dm[0].trim()):'')]);});
+  (S.allWire||[]).filter(r=>(r.v==="CLAIM"||r.v==="LEAD")&&(!r.ros||r.ros.net>0)).slice(0,2).forEach(r=>{const dm=r.why.match(/drop [^,|]+/);todo.push([COL[r.v],(r.free?'Add ':(r.v==="CLAIM"?'Claim ':'Bid '))+esc(r.n)+(r.free?' free ($0-1)':' $'+r.bid)+(dm?', '+esc(dm[0].trim()):'')]);});
   if(S.openSpot)todo.push(['#5BA8FF','Fill your open roster spot']);
   if(S.matchup&&S.matchup.myLeft>0)todo.push(['#8A94A8','Lineup: '+(S.matchup.margin>8?'ahead, safer player on coin flips':S.matchup.margin<-8?'behind, higher ceiling on coin flips':'close, higher projection')]);
   const doHtml='<div style="padding:8px 12px"><div style="color:#8A94A8;font-weight:800;font-size:10px;letter-spacing:1px">DO THIS WEEK</div>'+(todo.length?todo.map(t=>'<div style="margin-top:3px"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+t[0]+';margin-right:6px"></span>'+t[1]+'</div>').join(''):'<div style="color:#2FE08A">Nothing. Hold.</div>')+'</div>';
   /*drag*/
-  el.innerHTML='<div style="padding:9px 12px;border-bottom:1px solid #1B2333;display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800;letter-spacing:.5px">SEASON COACH <span style="color:#2FE08A">WK '+wk+'</span> <span style="color:#5A6478;font-size:10px">v10.6</span></span><span id="mkc-s-tog" style="cursor:pointer;color:#8A94A8">&#9662;</span></div>'+
+  el.innerHTML='<div style="padding:9px 12px;border-bottom:1px solid #1B2333;display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800;letter-spacing:.5px">SEASON COACH <span style="color:#2FE08A">WK '+wk+'</span> <span style="color:#5A6478;font-size:10px">v11.0</span></span><span id="mkc-s-tog" style="cursor:pointer;color:#8A94A8">&#9662;</span></div>'+
   doHtml+
-  '<div style="padding:6px 12px;font-size:11px;color:#8A94A8">FAAB <b style="color:#E8ECF4">$'+f.left+'</b>'+(f.reserve?' &middot; spend up to <b style="color:#2FE08A">$'+f.cap+'</b> now, $'+f.reserve+' held for wk'+RULES.RESERVE_UNTIL+'+':' &middot; full budget live')+'</div>'+
-  '<div style="padding:8px 12px;border-top:1px solid #1B2333"><div style="color:#8A94A8;font-weight:800;font-size:10px;letter-spacing:1px">DROP ORDER <span style="font-weight:400;color:#5A6478">(cheapest first)</span></div>'+holds+
+  '<div style="padding:6px 12px;font-size:11px;color:#8A94A8">FAAB <b style="color:#E8ECF4">$'+f.left+'</b> &middot; bid cap now <b style="color:#2FE08A">$'+f.cap+'</b> <span style="color:#5A6478">('+esc(f.label)+')</span></div>'+
+  '<div style="padding:8px 12px;border-top:1px solid #1B2333"><div style="color:#8A94A8;font-weight:800;font-size:10px;letter-spacing:1px">DROP ORDER <span style="font-weight:400;color:#5A6478">(cheapest thru wk17, playoffs x8)</span></div>'+holds+
     (safe.length?safe.join(""):'<div style="color:#8A94A8">no cheap drops</div>')+
   '</div>'+muHtml+kdHtml+wireHtml+tradeHtml+
   (S.err?'<div style="padding:6px 12px;color:#FF5C6A;font-size:11px">'+S.err+'</div>':'');

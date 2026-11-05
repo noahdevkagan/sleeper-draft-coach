@@ -2,6 +2,8 @@
 
 The draft tool handles draft day. These rules cover the part of the game where the last two seasons were actually lost. Derived from 3 years of league data.
 
+> Nov 5, 2026: the FAAB, hold and trade rules below are superseded by the v11.0 section at the end (skill v13.4).
+
 ## FAAB rules (the #1 leak)
 
 1. **Hard cap: $30 on any single bid before Week 8.** No exceptions. The Trey Benson all-in ($100, W3, returned 35 pts) and the pattern of being broke before byes is the single most expensive habit in the data.
@@ -60,3 +62,13 @@ Data: Sleeper weekly stats 2023-25, Sleeper preseason ADP, ESPN closing spread a
 - Scoring confirmed from league settings and Week 1-2 results: made FG 0, XP made 0. Missed FG = 3 + distance bonus (0-39: 6, 40-49: 5, 50+: 4). Missed XP 5.
 - League average about 1.9 pts/game. Nothing predicts it: YoY r -0.04 (2024), +0.44 (2025); weekly team implied total r 0.04; indoor 1.72 vs outdoor 1.89.
 - Rule: last pick, pick any starting kicker (engine lists last year's miss pts/g), never stream or spend a move on K.
+
+## v11.0 (Nov 5, 2026): championship rules (skill v13.4), each backtested
+
+- **Win the title, not the week.** Season sim (30,000 runs): one Week 15-17 point is worth 6.3x to 12.7x a Week 9-14 point (median 8.8x). Playoff weeks count 8x in every bid.
+- **The bye.** Top-2 seed: 36.3% title odds vs 17.7% without. Every Week 9-14 game swings 6-8 title points.
+- **FAAB plan.** $0.08 per weighted point. Weeks 9-11: $15 total, keep $50. Weeks 12-14: up to $35 for a playoff starter. Week 15+: everything.
+- **Pickup signals** (1,546 free-agent player-weeks, Weeks 2-7): Sleeper proj 12+ hit 12+ ppg 5 of 7; 10+ touches 20%; a 15+ point box score 12% (worst). Rivals added only 7 of 42 eventual 12+ ppg free agents within a week. Edge = speed, not a secret projection. ESPN projections: no lead (MAE 5.54 vs Sleeper 5.45).
+- **Role rule kept.** All 13 of Mak's drops tested: "2+ starts" would have freed Allgeier (1 projected start, then 22.0 ppg).
+- **DEF.** Weekly 2+ stream rule never fired Weeks 2-7 (same 38.0 pts as holding).
+- **Trades.** Retired Nov 2: Mahomes has near-zero trade value; the only fair deal found was small.
